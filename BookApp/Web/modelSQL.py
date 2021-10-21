@@ -1,28 +1,39 @@
 from passlib.hash import sha256_crypt
-from __init__ import DB
+from . import DB, login_manager
 
-book_identifier = DB.Table('book_identifier', DB.Column('User_id', DB.Integer, DB.ForeignKey('User.id')),
-                           DB.Column('Book_id', DB.Integer, DB.ForeignKey('Book.id')))
+# book_identifier = DB.Table('book_identifier', DB.Column('User_id', DB.ForeignKey('User.id'), primary_key=True),
+#                            DB.Column('Book_id', DB.ForeignKey('Book.id'), primary_key=True))
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 class User(DB.Model):
+    __tablename__ = 'User'
     id = DB.Column(DB.Integer, primary_key=True)
-    nickname = DB.Column(DB.String(50), unique=True)
+    username = DB.Column(DB.String(50), unique=True)
     email = DB.Column(DB.String(120), unique=True, nullable=False)
     password = DB.Column(DB.String(32), nullable=False)
     user_profile = DB.Column(DB.Integer, DB.ForeignKey('UserProfile.id'))
+    children = DB.relationship('UserProfile')
 
-    def __init__(self, nickname, email, password):
+    def __init__(self, username, email, password, user_profile):
         hashed_password = sha256_crypt.hash(password)
-        self.username, self.email, self.password = nickname, email, hashed_password
+        self.username, self.email, self.password, self.user_profile = username, email, hashed_password, user_profile
 
 
 class UserProfile(DB.Model):
+    __tablename__ = 'UserProfile'
     id = DB.Column(DB.Integer, primary_key=True)
     user = DB.relationship('User', uselist=False, backref='UserProfile')
-    books = DB.relationship('Book', secondary=book_identifier)
+    books = DB.relationship('Book', uselist=False, backref='UserProfile')
 
 
 class Book(DB.Model):
+    __tablename__ = 'Book'
     id = DB.Column(DB.Integer, primary_key=True)
     title = DB.Column(DB.String(100), unique=True, nullable=False)
+    book_profile = DB.Column(DB.Integer, DB.ForeignKey('UserProfile.id'))
+    children = DB.relationship('UserProfile')

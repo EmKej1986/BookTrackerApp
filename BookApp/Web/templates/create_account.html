@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+<form action="#" method="POST">
+    {% for field in form %}
+    <div>
+        <th>{{field.label }}</th>
+        <td>{{ field }}</td>
+        {% if field.errors %}
+            <div class=errors>
+            {% for error in field.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</form>
+{% endblock %}

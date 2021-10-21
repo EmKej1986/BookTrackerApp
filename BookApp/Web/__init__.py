@@ -1,17 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from hashlib import sha256
 from flask_login import LoginManager
 from datetime import timedelta
 
 DB = SQLAlchemy()
 login_manager = LoginManager()
-SHA256 = sha256()
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite3:///database.sqlite3'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite3'
     app.config['SECRET_KEY'] = 'ToyotaCamry'
     app.permanent_session_lifetime = timedelta(minutes=60)
     DB.init_app(app)
