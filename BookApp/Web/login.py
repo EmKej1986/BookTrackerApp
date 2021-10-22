@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, Blueprint, flash, session
-from .forms import RegistrationForm, LoginFrom
+from .forms import RegistrationForm, LoginForm
 from .modelSQL import User, UserProfile
 from . import DB
 from flask_login import login_user, login_required
@@ -13,12 +13,12 @@ create_account_blueprint = Blueprint('logout', __name__)
 @login_blueprint.route('/', methods=['POST', 'GET'])
 @login_blueprint.route('/login', methods=['POST', 'GET'])
 def login():
-    form = LoginFrom()
+    form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user and sha256_crypt.verify(user.password, form.password.data):
+        if user and sha256_crypt.verify(form.password.data, user.password):
             login_user(user, remember=form.remember.data)
-            session.update({'nickname': form.nickname.data})
+            session.update({'username': form.username.data})
             return redirect(url_for('book_track.book_track'))
         else:
             flash('Login Unsuccessful. Please check nickname or password', 'danger')
@@ -26,7 +26,7 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@create_account_blueprint.route('/create_account', methods=['POST', 'GET'])
+@create_account_blueprint.route('/register', methods=['POST', 'GET'])
 def create_account():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -40,7 +40,7 @@ def create_account():
         flash(f'Your account has been created! You are now able to log in', 'success')
 
         return redirect(url_for('login.login'))
-    return render_template('create_account.html', title='Sign In', form=form)
+    return render_template('register.html', title='Sign In', form=form)
 
 
 @book_track_blueprint.route('/book_track', methods=['GET'])

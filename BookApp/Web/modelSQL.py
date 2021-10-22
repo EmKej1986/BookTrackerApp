@@ -1,8 +1,6 @@
 from passlib.hash import sha256_crypt
 from . import DB, login_manager
-
-# book_identifier = DB.Table('book_identifier', DB.Column('User_id', DB.ForeignKey('User.id'), primary_key=True),
-#                            DB.Column('Book_id', DB.ForeignKey('Book.id'), primary_key=True))
+from flask_login import UserMixin
 
 
 @login_manager.user_loader
@@ -10,14 +8,18 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(DB.Model):
+book_identifier = DB.Table('book_identifier', DB.Model.metadata,
+                           DB.Column('UserProfile_id', DB.ForeignKey('UserProfile.id')),
+                           DB.Column('Book_id', DB.ForeignKey('Book.id')))
+
+
+class User(DB.Model, UserMixin):
     __tablename__ = 'User'
     id = DB.Column(DB.Integer, primary_key=True)
     username = DB.Column(DB.String(50), unique=True)
     email = DB.Column(DB.String(120), unique=True, nullable=False)
     password = DB.Column(DB.String(32), nullable=False)
     user_profile = DB.Column(DB.Integer, DB.ForeignKey('UserProfile.id'))
-    children = DB.relationship('UserProfile')
 
     def __init__(self, username, email, password, user_profile):
         hashed_password = sha256_crypt.hash(password)
@@ -28,12 +30,10 @@ class UserProfile(DB.Model):
     __tablename__ = 'UserProfile'
     id = DB.Column(DB.Integer, primary_key=True)
     user = DB.relationship('User', uselist=False, backref='UserProfile')
-    books = DB.relationship('Book', uselist=False, backref='UserProfile')
+    books = DB.relationship('Book', secondary=book_identifier)
 
 
 class Book(DB.Model):
     __tablename__ = 'Book'
     id = DB.Column(DB.Integer, primary_key=True)
     title = DB.Column(DB.String(100), unique=True, nullable=False)
-    book_profile = DB.Column(DB.Integer, DB.ForeignKey('UserProfile.id'))
-    children = DB.relationship('UserProfile')
