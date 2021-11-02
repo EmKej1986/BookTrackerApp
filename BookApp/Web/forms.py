@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from .modelSQL import User
 
@@ -9,7 +9,6 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=4)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Create Account')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -31,3 +30,7 @@ class LoginForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if not user:
             raise ValidationError('There is no user with this nickname')
+
+
+class AddBookForm(FlaskForm):
+    title = StringField('Book Title', validators=[DataRequired()])

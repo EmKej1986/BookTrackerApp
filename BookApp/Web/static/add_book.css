@@ -1,0 +1,49 @@
+body, html{
+    background-image: url('4.jpg');
+    background-size: cover;
+    background-color:#34555E;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 18px;
+
+}
+
+.register-form{
+    font-size: 16px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    -webkit-transform: translate3d(-50%, -150%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.register-form label{
+    color: aliceblue;
+
+}
+.register-form input{
+    margin-bottom: 5px;
+    width: 515px;
+    height: 40px;
+    border-radius: 0px;
+}
+
+.add_book_button{
+    height: 50px;
+    width: 515px;
+    background-color:tomato;
+    border-radius: 0px;
+    font-size: 18px;
+    color:white;
+    border: none !important;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+.add_book_button:hover{
+    color: white;
+    background-color:aliceblue;
+}
+.add_book_button:active{
+    color: white;
+    background-color:aliceblue;
+}

@@ -36,4 +36,9 @@ class UserProfile(DB.Model):
 class Book(DB.Model):
     __tablename__ = 'Book'
     id = DB.Column(DB.Integer, primary_key=True)
-    title = DB.Column(DB.String(100), unique=True, nullable=False)
+    title = DB.Column(DB.String(100), nullable=False)
+    is_available = DB.Column(DB.Boolean, default=False)
+    user_profile = DB.Column(DB.Integer, DB.ForeignKey('UserProfile.id'))
+
+    def __init__(self, title, user_profile):
+        self.title, self.user_profile = title, user_profile

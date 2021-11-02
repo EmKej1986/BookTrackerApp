@@ -1,13 +1,15 @@
 body, html{
-    background-color:#34515E;
-   font-family: 'Open Sans Condensed', sans-serif;
+    background-image: url('1.jpg');
+    background-size: cover;
+    background-color:#34555E;
+    font-family: 'Open Sans Condensed', sans-serif;
     font-size: 18px;
 
 }
 
 .register-form{
     font-size: 16px;
-   left: 50%;
+    left: 50%;
     top: 50%;
     position: absolute;
     -webkit-transform: translate3d(-50%, -50%, 0);
@@ -15,7 +17,7 @@ body, html{
     transform: translate3d(-50%, -50%, 0);
 }
 
-.regbutton{    
+.regbutton{
     height: 50px;
     width: 200px;
     background-color:tomato;
@@ -25,15 +27,17 @@ body, html{
     border: none !important;
     margin-bottom: 5px;
 }
-.regbutton:hover{    
+.regbutton:hover{
     color: white;
     background-color:#aa422f;
 }
-.regbutton:active{    
+.regbutton:active{
     color: white;
     background-color:#aa422f;
 }
-.logbutton{    
+
+
+.logbutton{
     height: 50px;
     width: 200px;
     background-color:yellowgreen;
@@ -43,27 +47,27 @@ body, html{
     border: none !important;
     margin-bottom: 5px;
 }
-.logbutton:hover{    
+.logbutton:hover{
     color: white;
     background-color:darkolivegreen;
 }
-.logbutton:active{    
+.logbutton:active{
     color: white;
     background-color:darkolivegreen;
 }
-
 
 
 .register-form label{
     color: aliceblue;
-    
+
 }
 .register-form input{
     margin-bottom: 5px;
-    width: 430px;
+    width: 515px;
     height: 40px;
     border-radius: 0px;
 }
+
 
 #remember {
     width: auto;
