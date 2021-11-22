@@ -38,7 +38,6 @@ class Book(DB.Model):
     id = DB.Column(DB.Integer, primary_key=True)
     title = DB.Column(DB.String(100), nullable=False)
     is_available = DB.Column(DB.Boolean, default=False)
-    user_profile = DB.Column(DB.Integer, DB.ForeignKey('UserProfile.id'))
 
-    def __init__(self, title, user_profile):
-        self.title, self.user_profile = title, user_profile
+    def __init__(self, title):
+        self.title = title

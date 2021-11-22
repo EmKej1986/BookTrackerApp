@@ -20,7 +20,7 @@ function get_curr_location(page){
                 <td>{{ field }}</td>
             </div>
             {% if field.errors %}
-            <div class=errors>
+            <div class=errors  style="color:#F91F1F">
                 {% for error in field.errors %}
                 <span>{{ error }}</span>
                 {% endfor %}
@@ -35,7 +35,7 @@ function get_curr_location(page){
             </div>
 
             <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
-                <button onclick=get_curr_location("register") class="btn btn-default regbutton">Register</button>
+                <button type="button" onclick=get_curr_location("register") class="btn btn-default regbutton">Register</button>
             </div>
 
         </div>

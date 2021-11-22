@@ -9,12 +9,13 @@ body, html{
 
 .register-form{
     font-size: 16px;
-    left: 50%;
+    left: 53.5%;
     top: 50%;
     position: absolute;
     -webkit-transform: translate3d(-50%, -150%, 0);
     -moz-transform: translate3d(-50%, -50%, 0);
     transform: translate3d(-50%, -50%, 0);
+    font-family: "Baskerville";
 }
 
 .register-form label{
@@ -23,27 +24,27 @@ body, html{
 }
 .register-form input{
     margin-bottom: 5px;
-    width: 515px;
+    width: 750px;
     height: 40px;
     border-radius: 0px;
 }
 
 .create_account_button{
     height: 50px;
-    width: 515px;
-    background-color:tomato;
+    width: 750px;
+    background-color:white;
     border-radius: 0px;
     font-size: 18px;
-    color:white;
+    color:black;
     border: none !important;
     margin-bottom: 5px;
     margin-top: 20px;
 }
 .create_account_button:hover{
     color: white;
-    background-color:aliceblue;
+    background-color:#2FDD92;
 }
 .create_account_button:active{
     color: white;
-    background-color:aliceblue;
+    background-color:#2FDD92;
 }

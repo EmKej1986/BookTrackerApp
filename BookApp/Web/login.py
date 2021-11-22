@@ -55,11 +55,21 @@ def book_track():
 def add_book():
     form = AddBookForm(request.form)
     if form.validate_on_submit():
-        if current_user.is_authenticated:
-            book = Book(title=form.title.data, user_profile=current_user.user_profile)
-            DB.session.add(book)
-            DB.session.commit()
+        new_book = Book.query.filter_by(title=form.title.data).first()
+        if new_book is None:
+            new_book = Book(title=form.title.data)
 
-            return redirect(url_for('book_track.book_track'))
+        user_profile_id = current_user.user_profile
+        user_profile = UserProfile.query.get(user_profile_id)
+        user_profile.books.append(new_book)
+        DB.session.add(new_book)
+        DB.session.commit()
+
+        return redirect(url_for('book_track.book_track'))
 
     return render_template('add_book.html', title='Add Book', form=form)
+
+    # https://www.taniaksiazka.pl/Szukaj/q-<18+stopni+ponizej+zera>
+    # ul id=pagi-slide -> li -> div class="product-container" -> div class="product-main" -> div class="product-main-top" ->
+    # div class="product-main-top-info" -> div class="product-main-hidden" -> <h2> -> <a data-name=****"
+    # /html[1]/body[1]/div[7]/section[1]/div[1]/div[1]/div[4]/article[1]/ul[1]/li[1]/div[1]/div[2]/div[1]/div[1]/div[1]/h2[1]/a[1]
