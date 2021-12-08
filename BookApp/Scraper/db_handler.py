@@ -10,10 +10,9 @@ class DatabaseConnection:
         result = self.con.execute(query).fetchall()
         return result
 
-    def get_is_available(self, book):
-        is_available_status = True
+    def set_is_available(self, book, is_found):
         query = "UPDATE Book SET is_available = ? WHERE title = ?"
-        self.con.execute(query, (is_available_status, book))
+        self.con.execute(query, (is_found, book))
         self.con.commit()
 
     def __enter__(self):

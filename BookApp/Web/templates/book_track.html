@@ -14,6 +14,76 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='book_track.css') }}"/>
     </head>
     <body>
+
+        <script>
+            /*
+            <div class="col mb-5">
+                        <div class="card h-100">
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Available</div>
+                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"/>
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">Book title</h5>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View book</a></div>
+                            </div>
+                        </div>
+                    </div>
+            */
+            // pobieranie z API książek dla usera i zapisywanie ich do slownika (z rozroznieniem na avaialble i un...)
+            // DOM dynaminicznie zmieniany
+
+            function createCard(){
+                let colMbDiv = document.createElement('div');
+                colMbDiv.className = 'col mb-5';
+
+                let cardHDiv = document.createElement('div');
+                cardHDiv.className = 'card h-100';
+
+                let badgeDiv = document.createElement('div');
+                badgeDiv.className = 'badge bg-dark text-white position-absolute';
+                badgeDiv.style.top = '0.5rem';
+                badgeDiv.style.right = '0.5rem';
+                badgeDiv.innerHTML = 'Available';
+#####################################################################################################################
+                let cardImg = document.createElement('img');
+                carImg.className = 'card-img-top';
+                carImg.src = "https://dummyimage.com/450x300/dee2e6/6c757d.jpg";
+
+                let cardBody = document.createElement('div');
+                cardBody.className = 'card-body p-4';
+
+                let cardText = document.createElement('div');
+                cardText.className = 'text-center';
+
+                let cardBold = document.createElement('h5');
+                cardBold.className = 'fw-bolder';
+                cardBold.innerHTML = '<p>Book Title</p>';
+
+                let cardFooter = document.createElement('div');
+                cardFooter.className = 'card-footer p-4 pt-0 border-top-0 bg-transparent';
+
+                let textCenter = document.createElement('div');
+                textCenter.className = 'text-center';
+                let outlineButton = document.createElement('a');
+                outlineButton = 'btn btn-outline-dark mt-auto';
+                href?
+                outlineButton.innerHTML = '<p>'View Book</p>;
+
+            }
+
+            window.onload = () => {
+                let cardsParent = document.getElementsByClassName('row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center')[0];
+                cardsParent.
+                for(let i = 0; i < 3; ++i){
+
+                }
+            }
+
+        </script>
+
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
