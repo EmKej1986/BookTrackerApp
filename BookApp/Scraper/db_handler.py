@@ -13,7 +13,10 @@ class DatabaseConnection:
     def set_is_available(self, book, is_found):
         query = "UPDATE Book SET is_available = ? WHERE title = ?"
         self.con.execute(query, (is_found, book))
-        self.con.commit()
+
+    def set_url(self, book, url):
+        query = "UPDATE Book Set url = ? WHERE title = ?"
+        self.con.execute(query, (url, book))
 
     def __enter__(self):
         return self

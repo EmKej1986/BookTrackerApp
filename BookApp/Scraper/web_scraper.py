@@ -1,10 +1,7 @@
 from bs4 import BeautifulSoup
-from lxml import etree
-import requests
 from db_handler import DatabaseConnection
 import asyncio
 import aiohttp
-import re
 
 
 class HttpRequestSender:
@@ -26,25 +23,27 @@ class Fetcher:
 
 
 class Scraper:
-    def retrieve_titles(self, responses, books):
+
+    def retrieve_info(self, responses, books):
         for idx, webpage in enumerate(responses):
             soup = BeautifulSoup(webpage.decode('utf-8', errors="ignore"), 'html.parser')
             try:
-                selected_book = soup.select_one(".ecommerce-datalayer").decode()
-                print(selected_book)
+                print(soup)
+                selected_title = soup.select_one(".ecommerce-datalayer").decode()
+                # selected_url = soup.
             except AttributeError:
                 print(f"Book {books[idx][0]} not found")
             else:
-                selected_book = selected_book.lower()
-                is_found = True if selected_book.find(f'data-name="{books[idx][0].lower()}"') != -1 else False
-                print(is_found)
+                selected_title = selected_title.lower()
+                is_found = True if selected_title.find(f'data-name="{books[idx][0].lower()}"') != -1 else False
+                href_attr_pos = selected_title.find('href=')
+                url = "https://www.taniaksiazka.pl" \
+                      + selected_title[href_attr_pos: selected_title.find('.html', href_attr_pos)].replace('href="', '') \
+                      + ".html"
                 with DatabaseConnection(
                         r"C:\Users\mkope\PycharmProjects\BookTrackerProject\BookApp\Web\database.sqlite3") as db:
                     db.set_is_available(books[idx][0], is_found)
-
-
-# TODO simple e-mail sending app
-# TODO read about docker
+                    db.set_url(books[idx][0], url)
 
 
 class Executor:
@@ -70,10 +69,10 @@ class Executor:
         responses = asyncio.run(Fetcher.fetch_all(books_urls, self.http_sender.get))
         return responses
 
-    def retrieve_title(self, response_for_scraper):
-        self.scraper.retrieve_titles(response_for_scraper, self.books)
+    def retrieve_info(self, response_for_scraper):
+        self.scraper.retrieve_info(response_for_scraper, self.books)
 
 
 e = Executor()
 responses_http = e.get_titles_status()
-e.retrieve_title(responses_http)
+e.retrieve_info(responses_http)

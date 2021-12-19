@@ -25,6 +25,9 @@ class User(DB.Model, UserMixin):
         hashed_password = sha256_crypt.hash(password)
         self.username, self.email, self.password, self.user_profile = username, email, hashed_password, user_profile
 
+    def __str__(self):
+        return f"{self.username} {self.email}"
+
 
 class UserProfile(DB.Model):
     __tablename__ = 'UserProfile'
@@ -37,7 +40,11 @@ class Book(DB.Model):
     __tablename__ = 'Book'
     id = DB.Column(DB.Integer, primary_key=True)
     title = DB.Column(DB.String(100), nullable=False)
+    url = DB.Column(DB.String(500), nullable=True)
     is_available = DB.Column(DB.Boolean, default=False)
 
     def __init__(self, title):
         self.title = title
+
+    def __str__(self):
+        return self.title

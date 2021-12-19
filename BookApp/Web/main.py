@@ -1,14 +1,15 @@
 from flask import render_template, redirect, url_for, Blueprint, flash, session, request
 from .forms import RegistrationForm, LoginForm, AddBookForm
 from .modelSQL import User, UserProfile, Book
-from . import DB, current_user
-from flask_login import login_user, login_required
+from . import DB
+from flask_login import login_user, login_required, current_user, logout_user
 from passlib.hash import sha256_crypt
 
 login_blueprint = Blueprint('login', __name__)
 book_track_blueprint = Blueprint('book_track', __name__)
 register_blueprint = Blueprint('register', __name__)
 add_book_blueprint = Blueprint('add_book', __name__)
+logout_blueprint = Blueprint('logout', __name__)
 
 
 @login_blueprint.route('/', methods=['POST', 'GET'])
@@ -69,7 +70,10 @@ def add_book():
 
     return render_template('add_book.html', title='Add Book', form=form)
 
-    # https://www.taniaksiazka.pl/Szukaj/q-<18+stopni+ponizej+zera>
-    # ul id=pagi-slide -> li -> div class="product-container" -> div class="product-main" -> div class="product-main-top" ->
-    # div class="product-main-top-info" -> div class="product-main-hidden" -> <h2> -> <a data-name=****"
-    # /html[1]/body[1]/div[7]/section[1]/div[1]/div[1]/div[4]/article[1]/ul[1]/li[1]/div[1]/div[2]/div[1]/div[1]/div[1]/h2[1]/a[1]
+
+@logout_blueprint.route('/logout', methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login.login'))
+
