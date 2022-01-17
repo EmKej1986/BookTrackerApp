@@ -35,7 +35,7 @@
             // pobieranie z API książek dla usera i zapisywanie ich do slownika (z rozroznieniem na avaialble i un...)
             // DOM dynaminicznie zmieniany
 
-            function createCard(book, status){
+            function createCard(book, status, url){
 
                 let colMbDiv = document.createElement('div');
                 colMbDiv.className = 'col mb-5';
@@ -71,8 +71,8 @@
 
                 let outlineButton = document.createElement('a');
                 outlineButton.className = 'btn btn-outline-dark mt-auto';
-                outlineButton.href = "#"
-                outlineButton.innerHTML = '<p>View Book</p>';
+                outlineButton.href = url
+                outlineButton.innerHTML = '<p>Book purchase url</p>';
 
                 cardFooter.appendChild(textCenter.appendChild(outlineButton)); // add <a> to textCenter, textCenter to cardFooter
                 cardBody.appendChild(cardText.appendChild(cardBold)); // add <h5> to cardBold, cardBold to cardBody
@@ -104,8 +104,8 @@
                 let book = [];
 
                 let cardsParent = document.getElementsByClassName('row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center')[0];
-                books_available.forEach(book => { cardsParent.appendChild(createCard(book, 'available')) });
-                books_unavailable.forEach(book => { cardsParent.appendChild(createCard(book, 'unavailable')) });
+                books_available.forEach(book => { cardsParent.appendChild(createCard(book['title'], 'available', book['url'])) });
+                books_unavailable.forEach(book => { cardsParent.appendChild(createCard(book['title'], 'unavailable', book['url'])) });
 
 
 
@@ -120,16 +120,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/add_book">Add Book</a></li>
                     </ul>
                     <form class="nav-link">
                         <a href="/logout ">

@@ -6,7 +6,7 @@ class DatabaseConnection:
         self.con = sqlite3.connect(path)
 
     def get_titles(self):
-        query = f'SELECT title FROM Book'
+        query = "SELECT title FROM Book"
         result = self.con.execute(query).fetchall()
         return result
 
@@ -17,6 +17,21 @@ class DatabaseConnection:
     def set_url(self, book, url):
         query = "UPDATE Book Set url = ? WHERE title = ?"
         self.con.execute(query, (url, book))
+
+    def get_book_by_title(self, selected_title):
+        query = "SELECT is_available, id FROM Book WHERE title = ?"
+        result = self.con.execute(query, (selected_title,)).fetchone()
+        return result
+
+    def get_users_profile_id(self, book_id):
+        query = "SELECT UserProfile_id FROM book_identifier WHERE book_id = ? IN (SELECT book_id FROM book_identifier)"
+        result = self.con.execute(query, (book_id,)).fetchall()
+        return result
+
+    def get_users_email(self, profile_id):
+        query = "SELECT email FROM User WHERE user_profile = ?"
+        result = self.con.execute(query, (profile_id,)).fetchone()
+        return result
 
     def __enter__(self):
         return self
