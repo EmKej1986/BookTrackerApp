@@ -1,22 +1,23 @@
 import smtplib
 import json
 from datetime import date
+from dotenv import load_dotenv
+import os
 
 try:
-    # read content from your file
+
     todays_date = str(date.today())
     users_emails = open(f'..\Scraper\{todays_date}.json', encoding='utf-8')
     data = json.load(users_emails)
-    # iterate over all emails
     for key, value in data.items():
         for email in value:
-    #doing stuff below
-    #python decouple
             smtp = smtplib.SMTP('smtp.gmail.com', 587)
 
             smtp.starttls()
+            email_address = os.environ['EMAIL']
+            email_password = os.environ['PASSWORD']
 
-            smtp.login('books.tracker.app@gmail.com', 'Zelek.69')
+            smtp.login(email_address, email_password)
 
             book_title = key.encode("ISO-8859-2")
             subject = f"Your book {book_title}"
