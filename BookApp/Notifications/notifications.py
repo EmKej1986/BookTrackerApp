@@ -1,7 +1,6 @@
 import smtplib
 import json
 from datetime import date
-from dotenv import load_dotenv
 import os
 
 try:

@@ -16,7 +16,7 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'login.login'
 
-    from .main import login_blueprint, register_blueprint, book_track_blueprint, add_book_blueprint, logout_blueprint
+    from main import login_blueprint, register_blueprint, book_track_blueprint, add_book_blueprint, logout_blueprint
     app.register_blueprint(login_blueprint)
     app.register_blueprint(register_blueprint)
     app.register_blueprint(book_track_blueprint)

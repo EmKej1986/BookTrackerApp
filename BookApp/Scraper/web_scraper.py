@@ -26,39 +26,36 @@ class Fetcher:
 
 
 class Scraper:
-
-        def retrieve_info(self, responses, books):
-            notification_info = {}
-            for idx, webpage in enumerate(responses):
-                soup = BeautifulSoup(webpage.decode('ISO-8859-2'), 'html.parser')
-                book_title = books[idx][0]
-                try:
-                    selected_attribute = soup.select_one(".ecommerce-datalayer").decode()
-                except AttributeError:
-                    print(f"Book {book_title} not found")
-                else:
-                    selected_attribute = selected_attribute.lower()
-                    is_found = True if selected_attribute.find(f'data-name="{books[idx][0].lower()}"') != -1 else False
-                    href_attr_pos = selected_attribute.find('href=')
-                    selected_title = selected_attribute[href_attr_pos: selected_attribute.find('.html', href_attr_pos)].replace('href="', '')
-                    url = "https://www.taniaksiazka.pl" \
-                          + selected_title \
-                          + ".html"
-                    notification_info.update({book_title: []})
-                    if is_found:
-                        users_emails = AvailabilityValidator.retrieve_email(book_title)
-                        notification_info[book_title] += users_emails
-                    self.save_book_status(books, is_found, idx, url)
-
-            FileHandler.save_notification_info(notification_info)
-
-
-        def save_book_status(self, books, is_found, idx, url):
-            with DatabaseConnection(
-                    "..\Web\database.sqlite3") as db:
-                db.set_is_available(books[idx][0], is_found)
+    def retrieve_info(self, responses, books):
+        notification_info = {}
+        for idx, webpage in enumerate(responses):
+            soup = BeautifulSoup(webpage.decode('ISO-8859-2'), 'html.parser')
+            book_title = books[idx][0]
+            try:
+                selected_attribute = soup.select_one(".ecommerce-datalayer").decode()
+            except AttributeError:
+                print(f"Book {book_title} not found")
+            else:
+                selected_attribute = selected_attribute.lower()
+                is_found = True if selected_attribute.find(f'data-name="{books[idx][0].lower()}"') != -1 else False
+                href_attr_pos = selected_attribute.find('href=')
+                selected_title = selected_attribute[href_attr_pos: selected_attribute.find('.html', href_attr_pos)].replace('href="', '')
+                url = "https://www.taniaksiazka.pl" \
+                      + selected_title \
+                      + ".html"
+                notification_info.update({book_title: []})
                 if is_found:
-                    db.set_url(books[idx][0], url)
+                    users_emails = AvailabilityValidator.retrieve_email(book_title)
+                    notification_info[book_title] += users_emails
+                self.save_book_status(books, is_found, idx, url)
+
+        FileHandler.save_notification_info(notification_info)
+
+    def save_book_status(self, books, is_found, idx, url):
+        with DatabaseConnection("..\Web\database.sqlite3") as db:
+            db.set_is_available(books[idx][0], is_found)
+            if is_found:
+                db.set_url(books[idx][0], url)
 
 
 class AvailabilityValidator:

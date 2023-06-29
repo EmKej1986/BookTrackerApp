@@ -1,11 +1,11 @@
 from flask import request, Blueprint
-from BookApp.Web.modelSQL import User, UserProfile, Book
+from modelSQL import User, UserProfile, Book
 import json
 
 get_all_user_books_blueprint = Blueprint('get_books', __name__)
 
 
-@get_all_user_books_blueprint.route('/get_books', methods=['GET'])  # get_books/?username=Mateusz
+@get_all_user_books_blueprint.route('/get_books', methods=['GET'])
 def get_all_user_books():
     username = request.args['username']
 
