@@ -9,8 +9,7 @@ ma = Marshmallow()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = \
-        r'sqlite:///..\Web\database.sqlite3'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:postgres@db:5432/book_db'
 
     CORS(app)
     from views import get_all_user_books_blueprint

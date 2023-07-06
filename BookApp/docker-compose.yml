@@ -8,9 +8,35 @@ services:
       - "5001:5001"
     environment:
       FLASK_ENV: development
+    depends_on:
+      db:
+        condition: service_healthy
   web:
     build: Web/
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        flask db init
+        flask db migrate
+        flask db upgrade
+        flask run
     ports:
       - "5000:5000"
     environment:
       FLASK_ENV: development
+    depends_on:
+      - api
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=book_db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 30s
+      retries: 6
+    restart: always

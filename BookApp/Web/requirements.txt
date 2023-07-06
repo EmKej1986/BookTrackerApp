@@ -1,8 +1,9 @@
-Flask==2.2.3
-Flask-SQLAlchemy==3.0.0
-Flask-Login==0.6.2
-WTForms==2.3.3
-passlib==1.7.4
-Flask-WTF==0.15.1
+Flask
+Flask-SQLAlchemy
+Flask-Login
+WTForms
+passlib
+Flask-WTF
 email_validator
-Werkzeug==2.3.6
+Werkzeug
+Flask-Migrate

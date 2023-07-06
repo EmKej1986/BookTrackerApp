@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, Blueprint, flash, session, request
 from forms import RegistrationForm, LoginForm, AddBookForm
 from modelSQL import User, UserProfile, Book
-from __init__ import DB
+from web import DB
 from flask_login import login_user, login_required, current_user, logout_user
 from passlib.hash import sha256_crypt
 

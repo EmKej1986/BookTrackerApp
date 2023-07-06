@@ -1,5 +1,5 @@
 from passlib.hash import sha256_crypt
-from __init__ import DB, login_manager
+from web import DB, login_manager
 from flask_login import UserMixin
 
 
