@@ -3,7 +3,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: API/Dockerfile
+      dockerfile: api/Dockerfile
     ports:
       - "5001:5001"
     environment:
@@ -12,7 +12,7 @@ services:
       db:
         condition: service_healthy
   web:
-    build: Web/
+    build: web/
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |

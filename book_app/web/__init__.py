@@ -10,10 +10,11 @@ login_manager = LoginManager()
 
 
 def create_app():
-    from web.modelSQL import User, UserProfile, Book
+    from book_app.web.modelSQL import User, UserProfile, Book
+
     flask_migrate = Migrate()
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:postgres@db:5432/book_db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///../books_db.sqlite3"  # 'postgres://postgres:postgres@db:5432/book_db'
     app.config['SECRET_KEY'] = 'ToyotaCamry'
     app.permanent_session_lifetime = timedelta(minutes=60)
     DB.init_app(app)

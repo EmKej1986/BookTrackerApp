@@ -1,5 +1,5 @@
 from flask import request, Blueprint
-from modelSQL import User, UserProfile, Book
+from book_app.web.modelSQL import User, UserProfile, Book
 import json
 
 get_all_user_books_blueprint = Blueprint('get_books', __name__)

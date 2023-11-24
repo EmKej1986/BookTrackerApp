@@ -1,4 +1,4 @@
-from init import create_app
+from book_app.api import create_app
 
 if __name__ == "__main__":
     app = create_app()

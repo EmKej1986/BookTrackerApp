@@ -4,7 +4,7 @@ WORKDIR /API
 
 COPY API/requirements.txt .
 COPY Web/modelSQL.py/ .
-COPY Web/__init__.py/ .
+COPY Web/__init__.py/ web.py
 
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
