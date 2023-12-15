@@ -6,7 +6,7 @@ import os
 try:
 
     todays_date = str(date.today())
-    users_emails = open(f'..\Scraper\{todays_date}.json', encoding='utf-8')
+    users_emails = open(f'..\scraper\{todays_date}.json', encoding='utf-8')
     data = json.load(users_emails)
     for key, value in data.items():
         for email in value:
